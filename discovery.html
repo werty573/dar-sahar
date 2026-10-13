@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Discovery Box — Dar Sahar</title>
+<meta name="description" content="Build your own box of 5ml Arabian perfume decants. Any 3, 5 or 8 scents.">
+<meta name="theme-color" content="#0d0a08">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%230d0a08'/%3E%3Cpath d='M23.5 13.5a7 7 0 1 0 2.6 9.6 5.6 5.6 0 1 1-2.6-9.6Z' fill='%23c9a45c'/%3E%3C/svg%3E">
+<style>
+.dx>*{min-width:0}
+.dx{display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(24px,4vw,60px);align-items:start}
+.tiers{display:flex;gap:8px;margin:0 0 26px}
+.tier{flex:1;border:1px solid var(--line2);border-radius:16px;padding:14px;text-align:left;transition:.3s}
+.tier.on{border-color:var(--gold);background:rgba(201,164,92,.1);box-shadow:inset 0 0 0 1px var(--gold)}
+.tier b{display:block;font:500 26px/1 var(--serif)}
+.tier span{font-size:13px;color:var(--mute)}
+.tier em{font-style:normal;color:var(--gold2);font-size:13px;display:block;margin-top:6px}
+.picks{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.pk{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:3/4;text-align:left;isolation:isolate;border:1px solid var(--line)}
+.pk img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;transition:transform 1s var(--ease),filter .4s}
+.pk:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,transparent 40%,rgba(13,10,8,.92))}
+.pk .t{position:absolute;left:12px;right:12px;bottom:10px}
+.pk b{display:block;font:500 20px/1.05 var(--serif)}
+.pk small{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.pk .tick{position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:50%;border:1px solid var(--line2);background:rgba(13,10,8,.5);display:grid;place-items:center;font-size:14px;color:var(--ink);transition:.35s var(--ease)}
+.pk.on{border-color:var(--gold)}
+.pk.on .tick{background:var(--gold);border-color:var(--gold);transform:scale(1.1)}
+.pk.on img{filter:brightness(1.1)}
+.pk.full:not(.on){opacity:.45}
+.boxp{position:sticky;top:110px;background:var(--ink2);border:1px solid var(--line);border-radius:26px;padding:24px}
+.case{position:relative;border-radius:18px;padding:22px 16px 18px;background:linear-gradient(180deg,#1b140f,#0f0b08);border:1px solid #3a2c1d;box-shadow:inset 0 2px 30px rgba(0,0,0,.7)}
+.case .lid{font:500 11px var(--sans);letter-spacing:.4em;color:var(--gold);text-align:center;margin-bottom:16px}
+.slots{display:grid;gap:10px;justify-content:center}
+.slot{height:150px;border-radius:12px;background:radial-gradient(ellipse at 50% 30%,#2b1d14,#140e0a);box-shadow:inset 0 3px 10px rgba(0,0,0,.8);display:flex;align-items:flex-end;justify-content:center;padding-bottom:10px;position:relative}
+.vial{width:22px;height:112px;border-radius:5px 5px 9px 9px;position:relative;background:linear-gradient(90deg,rgba(255,255,255,.18),rgba(255,255,255,.04) 40%,rgba(255,255,255,.14));border:1px solid rgba(255,255,255,.22);overflow:hidden;transform:translateY(-140%);opacity:0;transition:transform .7s var(--ease),opacity .4s}
+.vial:before{content:"";position:absolute;top:-1px;left:-1px;right:-1px;height:20px;background:linear-gradient(90deg,#8c6c33,#efdcab,#8c6c33);border-radius:4px 4px 0 0}
+.vial i{position:absolute;left:0;right:0;bottom:0;height:72%;background:var(--c);opacity:.85}
+.vial i:after{content:"";position:absolute;left:3px;top:4px;bottom:6px;width:3px;border-radius:2px;background:rgba(255,255,255,.35)}
+.slot.f .vial{transform:none;opacity:1}
+.slot .nm{position:absolute;bottom:-18px;left:-6px;right:-6px;text-align:center;font-size:10px;letter-spacing:.06em;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.slot:not(.f):before{content:"+";position:absolute;inset:0;display:grid;place-items:center;color:var(--ink4);font-size:22px}
+.sum{display:flex;justify-content:space-between;align-items:baseline;margin:34px 0 14px}
+.sum b{font:500 34px/1 var(--serif);color:var(--gold2)}
+.sum s{color:var(--mute2);font-size:15px;margin-right:8px}
+.save{display:inline-block;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);background:var(--gold2);padding:5px 10px;border-radius:99px}
+.mbox{display:none}
+@media(max-width:900px){
+  .dx{grid-template-columns:1fr}.boxp{position:static;order:-1}
+  .picks{grid-template-columns:repeat(2,1fr)}
+  .tiers .tier{padding:12px 10px}.tier b{font-size:21px}
+  .slot{height:120px}.vial{height:88px;width:18px}
+  .mbox{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:79;padding:10px 16px calc(10px + env(safe-area-inset-bottom));gap:12px;align-items:center;background:rgba(21,16,12,.95);backdrop-filter:blur(12px);border-top:1px solid var(--line)}
+  .mbox .btn{flex:1;height:48px}
+  .mbox .c{font:500 20px/1 var(--serif);color:var(--gold2)}
+  .mbox small{display:block;color:var(--mute);font-size:12px}
+  body .wa-float{bottom:calc(84px + env(safe-area-inset-bottom))}
+}
+</style>
+</head>
+<body data-page="discovery">
+<header class="phead" style="padding-bottom:40px"><div class="wrap">
+  <div class="crumbs"><a href="index.html">Home</a> / Discovery Box</div>
+  <div class="ar-bg ar" aria-hidden="true">اكتشف</div>
+  <div class="eyebrow">Build your own</div>
+  <h1 style="margin-top:14px">The <em>Discovery</em> Box</h1>
+  <p class="lead" style="margin-top:18px">Pick your scents, we hand-pour 5ml of each from the sealed bottle into a gold-capped atomiser and pack them in a keepsake case. The perfect gift — or the smartest way to find your signature.</p>
+</div></header>
+
+<main class="wrap">
+  <div class="dx">
+    <div>
+      <div class="tiers" id="tiers"></div>
+      <div class="sec-head" style="margin-bottom:18px"><h3 style="font-size:30px">Choose <span id="need">5</span> scents</h3><button class="link" id="surprise">Surprise me ✦</button></div>
+      <div class="picks" id="picks"></div>
+    </div>
+    <aside class="boxp" id="boxp">
+      <div class="case"><div class="lid">DAR · SAHAR · DISCOVERY</div><div class="slots" id="slots"></div></div>
+      <div class="sum"><div><span class="save" id="savep">Save 0%</span></div><div><s id="was"></s><b id="tot"></b></div></div>
+      <button class="btn gold block" id="addbox">Add box to bag</button>
+      <a class="btn wa block" id="wabox" target="_blank" rel="noopener" style="margin-top:8px">${'WhatsApp'}</a>
+      <p style="font-size:12.5px;color:var(--mute2);text-align:center;margin-top:12px">Gift note & ribbon free · ships in 1–3 days</p>
+    </aside>
+  </div>
+</main>
+<div class="mbox" id="mbox"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="data.js"></script>
+<script src="shared.js"></script>
+<script>
+(function(){
+  const TIERS = [{n:3,price:210},{n:5,price:350},{n:8,price:520}];
+  let tier = TIERS[1], picks = [];
+  const pool = PRODUCTS.filter(p=>!p.home && !p.oil);
+  const five = p => sizesFor(p).find(s=>s.k==='5').price;
+  $('#tiers').innerHTML = TIERS.map((t,i)=>`<button class="tier ${i===1?'on':''}" data-i="${i}"><b>${t.n} scents</b><span>${money(t.price)}</span><em>${money(Math.round(t.price/t.n))} each</em></button>`).join('');
+  $('#picks').innerHTML = pool.map(p=>`<button class="pk" data-id="${p.id}"><img src="${p.img}" alt="" loading="lazy"><span class="tick">✓</span><span class="t"><small>${gLabel[p.g]} · ${FAMILIES[p.fam].label}</small><b>${p.name}</b></span></button>`).join('');
+
+  function render(){
+    $('#need').textContent = tier.n;
+    $('#slots').style.gridTemplateColumns = `repeat(${tier.n>5?4:tier.n},minmax(0,${tier.n>5?'52px':'60px'}))`;
+    $('#slots').innerHTML = Array.from({length:tier.n},(_,i)=>{const p=byId(picks[i]);return `<div class="slot ${p?'f':''}"><div class="vial" style="--c:${p?famColor[p.fam]:'transparent'}"><i></i></div>${p?`<span class="nm">${p.name}</span>`:''}</div>`;}).join('');
+    $$('.pk').forEach(b=>{b.classList.toggle('on',picks.includes(b.dataset.id)); b.classList.toggle('full',picks.length>=tier.n);});
+    const sep = picks.reduce((t,id)=>t+five(byId(id)),0) + (tier.n-picks.length)*75;
+    const done = picks.length===tier.n;
+    $('#tot').textContent = money(tier.price); $('#was').textContent = money(Math.max(sep, tier.price+20));
+    $('#savep').textContent = `Save ${Math.max(5,Math.round((1-tier.price/Math.max(sep,tier.price+20))*100))}%`;
+    const ab = $('#addbox'); ab.disabled = !done; ab.style.opacity = done?1:.45; ab.textContent = done?'Add box to bag':`Pick ${tier.n-picks.length} more`;
+    const names = picks.map(id=>byId(id).name);
+    const msg = `Hi ${SHOP}! 🌙 I'd like a Discovery Box (${tier.n} × 5ml) for ${money(tier.price)}:\n${names.map(n=>'• '+n).join('\n')||'(still choosing)'}\n\nCan you deliver to me?`;
+    $('#wabox').href = waLink(msg); $('#wabox').innerHTML = `${ICON.wa} Order this box on WhatsApp`;
+    $('#mbox').innerHTML = `<div><div class="c">${picks.length}/${tier.n} chosen</div><small>${money(tier.price)} · Discovery Box</small></div><button class="btn gold" ${done?'':'disabled style="opacity:.45"'} id="maddbox">${done?'Add to bag':'Keep picking'}</button>`;
+    $('#maddbox').onclick = addBox;
+    window.WA_CONTEXT = ()=>['Order this box', msg]; updateFloat();
+  }
+  function addBox(){
+    if (picks.length!==tier.n) return;
+    const names = picks.map(id=>byId(id).name);
+    Bag.add('box','box'+tier.n,1,{ key:'box|'+tier.n+'|'+picks.join(','), name:`Discovery Box · ${tier.n}`, house:'', label:`${tier.n} × 5ml decants`, price:tier.price, img:'img/giftbox.jpg', picks:names });
+    picks=[]; render();
+  }
+  $('#tiers').onclick = e=>{const b=e.target.closest('.tier'); if(!b)return; tier=TIERS[+b.dataset.i]; picks=picks.slice(0,tier.n); $$('.tier').forEach(t=>t.classList.toggle('on',t===b)); render();};
+  $('#picks').onclick = e=>{const b=e.target.closest('.pk'); if(!b)return; const id=b.dataset.id;
+    if (picks.includes(id)) picks=picks.filter(x=>x!==id); else if (picks.length<tier.n) picks.push(id); else { b.animate([{transform:'translateX(0)'},{transform:'translateX(-6px)'},{transform:'translateX(6px)'},{transform:'translateX(0)'}],{duration:300}); return; }
+    render();};
+  $('#surprise').onclick = ()=>{ const sh=[...pool].sort(()=>Math.random()-.5); picks=sh.slice(0,tier.n).map(p=>p.id); render(); };
+  $('#addbox').onclick = addBox;
+  render();
+})();
+</script>
+</body>
+</html>

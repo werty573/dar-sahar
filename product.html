@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Fragrance — Dar Sahar</title>
+<meta name="theme-color" content="#0d0a08">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%230d0a08'/%3E%3Cpath d='M23.5 13.5a7 7 0 1 0 2.6 9.6 5.6 5.6 0 1 1-2.6-9.6Z' fill='%23c9a45c'/%3E%3C/svg%3E">
+<style>
+.pd{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(28px,5vw,80px);padding-top:130px}
+.gal{position:sticky;top:110px;align-self:start;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.gal .main{grid-column:1/-1;aspect-ratio:4/5;border-radius:240px 240px var(--r) var(--r);overflow:hidden;position:relative;cursor:zoom-in}
+.gal img{width:100%;height:100%;object-fit:cover}
+.gal .main img{transition:transform .5s var(--ease);transform-origin:var(--zx,50%) var(--zy,50%)}
+.gal .main.zoom img{transform:scale(1.8)}
+.gal .sub{aspect-ratio:1;border-radius:var(--r);overflow:hidden;position:relative}
+.gal .sub span{position:absolute;left:12px;bottom:10px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;text-shadow:0 1px 8px #000}
+.info .house{font-size:13px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+.info h1{font-size:clamp(56px,7vw,96px);margin:12px 0 6px}
+.info .pr{font:500 30px/1 var(--serif);color:var(--gold2);display:flex;gap:14px;align-items:baseline;margin:14px 0 20px}
+.info .pr s{font-size:20px;color:var(--mute2)}
+.info .desc{font-size:17px;color:var(--mute);max-width:52ch}
+.buy{display:flex;gap:10px;margin-top:6px}
+.buy .qty{margin:0;height:52px;padding:0 6px}
+.buy .qty button{width:36px;height:40px;font-size:18px}
+.wear{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
+.acc{border-top:1px solid var(--line);margin-top:30px}
+.acc details{border-bottom:1px solid var(--line)}
+.acc summary{list-style:none;cursor:pointer;padding:18px 0;font:500 22px/1 var(--serif);display:flex;justify-content:space-between}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary:after{content:"+";color:var(--gold);transition:transform .3s}
+.acc details[open] summary:after{transform:rotate(45deg)}
+.acc p{color:var(--mute);padding-bottom:18px;font-size:15px}
+.mbar{display:none}
+@media(max-width:860px){
+  .pd{grid-template-columns:1fr;padding-top:110px}
+  .gal{position:static}
+  .gal .main{border-radius:180px 180px var(--r) var(--r)}
+  .mbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:79;gap:10px;align-items:center;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:rgba(21,16,12,.94);backdrop-filter:blur(12px);border-top:1px solid var(--line);transform:translateY(110%);transition:transform .5s var(--ease)}
+  .mbar.on{transform:none}
+  .mbar .btn{flex:1;height:48px}
+  .mbar .t{font:500 20px/1.1 var(--serif)}
+  .mbar small{display:block;color:var(--gold2);font:13px var(--sans)}
+  body.pdp .wa-float{bottom:calc(84px + env(safe-area-inset-bottom))}
+}
+</style>
+</head>
+<body data-page="shop" class="pdp">
+<main class="wrap">
+  <div class="pd" id="pd"></div>
+  <section class="sec" style="padding-bottom:40px"><div class="sec-head"><div><div class="eyebrow">If you like this</div><h2 style="margin-top:14px">You'll <em>also love</em></h2></div><a class="link" href="shop.html">Back to shop →</a></div><div class="grid" id="rel"></div></section>
+</main>
+<div class="mbar" id="mbar"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="data.js"></script>
+<script src="shared.js"></script>
+<script>
+(function(){
+  const p = byId(new URLSearchParams(location.search).get('id')) || PRODUCTS[0];
+  document.title = `${p.name} by ${p.house} — Dar Sahar`;
+  const S = sizesFor(p); let sel = S[0].k, qty = 1;
+  const fam = FAMILIES[p.fam];
+  const whenL = { day:'Daytime', night:'Night out', occasion:'Weddings & occasions', everyday:'Everyday' };
+  $('#pd').innerHTML = `
+    <div class="gal">
+      <div class="main" id="zoom"><img src="${p.img}" alt="${p.name} — illustrative photo"></div>
+      <div class="sub"><img src="${fam.img}" alt="" loading="lazy"><span>${fam.label}</span></div>
+      <div class="sub"><img src="img/${p.g==='her'?'rose':p.fam==='fresh'?'dunes':'smoke2'}.jpg" alt="" loading="lazy"><span>${gLabel[p.g]}</span></div>
+    </div>
+    <div class="info">
+      <div class="crumbs"><a href="index.html">Home</a> / <a href="shop.html">Shop</a> / <a href="shop.html?fam=${p.fam}">${fam.label}</a></div>
+      <div class="house">${p.house}</div>
+      <h1>${p.name}</h1>
+      <div class="badges" style="position:static;margin-top:4px">${p.tags.map(t=>`<span class="badge ${t}">${t==='bestseller'?'Bestseller':t==='new'?'New in':'On sale'}</span>`).join('')}<span class="badge">${gLabel[p.g]}</span></div>
+      <div class="pr"><span id="price">${money(p.price)}</span>${p.was?`<s>${money(p.was)}</s>`:''}</div>
+      <p class="desc">${p.desc}</p>
+      <div class="sizes" id="sizes">${S.map(s=>`<button class="size ${s.k===sel?'on':''}" data-k="${s.k}"><b>${s.label}</b><span>${money(s.price)}</span></button>`).join('')}</div>
+      <div class="buy"><div class="qty"><button data-d="-1" aria-label="Less">−</button><span id="qn">1</span><button data-d="1" aria-label="More">+</button></div><button class="btn gold" style="flex:1" id="add">Add to bag</button></div>
+      <a class="btn wa block" id="wa" target="_blank" rel="noopener" style="margin-top:10px">${ICON.wa} Order this on WhatsApp</a>
+      <div class="wear">${p.when.map(w=>`<span class="chip">${whenL[w]}</span>`).join('')}</div>
+      ${pyrHTML(p)}${metersHTML(p)}
+      <div class="acc">
+        <details open><summary>How to wear it</summary><p>${p.oil?'Dab one drop on each wrist and behind the ears. Oils sit close and last all day — reapply after a swim.':p.home?'Place two bricks on the warmed burner. Let the smoke pass through your clothes and hair before heading out — the traditional Gulf way.':'Spray 3–4 times on pulse points and once on your clothes — fabric holds Arabian fragrances for days. In the heat, spray on moisturised skin for longer wear.'}</p></details>
+        <details><summary>Authenticity</summary><p>Sealed in its original box with a batch code you can check on the house's site. We buy direct from the manufacturer's regional distributors — never grey-market testers.</p></details>
+        <details><summary>Delivery & payment</summary><p>1–3 working days anywhere in Trinidad (TT$40–45), courier to Tobago (TT$65). Free over TT$800. Pay by bank transfer, Linx or cash on delivery.</p></details>
+        <details><summary>Decants explained</summary><p>Decants are hand-poured from a sealed full bottle into clean glass atomisers. 5ml ≈ 70 sprays, 10ml ≈ 140 — perfect for travel or trying before you buy.</p></details>
+      </div>
+    </div>`;
+  const cur = () => S.find(s=>s.k===sel);
+  function upd(){
+    $('#price').textContent = money(cur().price*qty); $('#qn').textContent = qty;
+    $('#wa').href = waLink(waProduct(p, `${cur().label} × ${qty} (${money(cur().price*qty)})`));
+    $('#mbar').innerHTML = `<div><div class="t">${p.name}</div><small>${cur().label} · ${money(cur().price*qty)}</small></div><button class="btn gold" id="madd">Add to bag</button>`;
+    $('#madd').onclick = add;
+    window.WA_CONTEXT = () => ['Ask about '+p.name, waProduct(p, cur().label)]; updateFloat();
+  }
+  const add = () => Bag.add(p.id, sel, qty);
+  $('#sizes').onclick = e=>{const b=e.target.closest('.size'); if(!b)return; sel=b.dataset.k; $$('#sizes .size').forEach(x=>x.classList.toggle('on',x===b)); upd();};
+  $('.buy .qty').onclick = e=>{const b=e.target.closest('button'); if(!b)return; qty=Math.max(1,qty+ +b.dataset.d); upd();};
+  $('#add').onclick = add;
+  const z = $('#zoom');
+  z.onclick = ()=>z.classList.toggle('zoom');
+  z.onmousemove = e=>{const r=z.getBoundingClientRect(); z.style.setProperty('--zx',(e.clientX-r.left)/r.width*100+'%'); z.style.setProperty('--zy',(e.clientY-r.top)/r.height*100+'%');};
+  z.onmouseleave = ()=>z.classList.remove('zoom');
+  new IntersectionObserver(([e])=>$('#mbar').classList.toggle('on',!e.isIntersecting && e.boundingClientRect.top<0)).observe($('#add'));
+  upd();
+  const rel = PRODUCTS.filter(x=>x.id!==p.id).sort((a,b)=>((b.fam===p.fam)*2+(b.g===p.g))-((a.fam===p.fam)*2+(a.g===p.g))).slice(0,4);
+  $('#rel').innerHTML = rel.map(cardHTML).join(''); revealAll();
+  if (window.gsap && !matchMedia('(prefers-reduced-motion: reduce)').matches) gsap.from(['.gal .main','.gal .sub','.info > *'],{opacity:0,y:30,duration:1.1,ease:'expo.out',stagger:.05});
+})();
+</script>
+</body>
+</html>

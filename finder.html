@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Scent Finder — Dar Sahar</title>
+<meta name="description" content="Answer five quick questions and get matched to three Arabian fragrances.">
+<meta name="theme-color" content="#0d0a08">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%230d0a08'/%3E%3Cpath d='M23.5 13.5a7 7 0 1 0 2.6 9.6 5.6 5.6 0 1 1-2.6-9.6Z' fill='%23c9a45c'/%3E%3C/svg%3E">
+<style>
+.fz{min-height:100svh;display:grid;grid-template-columns:1fr 1.15fr}
+.fz-vis{position:sticky;top:0;height:100svh;overflow:hidden}
+.fz-vis img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.2s var(--ease),transform 6s linear;transform:scale(1.12)}
+.fz-vis img.on{opacity:1;transform:scale(1)}
+.fz-vis:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 50%,var(--ink)),linear-gradient(0deg,rgba(13,10,8,.6),transparent 40%)}
+.fz-vis .ar{position:absolute;left:30px;bottom:30px;z-index:2;font-size:clamp(70px,9vw,140px);color:var(--gold2);opacity:.9;line-height:1}
+.fz-main{padding:140px var(--pad) 100px;display:flex;flex-direction:column;justify-content:center;max-width:720px}
+.prog{display:flex;gap:6px;margin-bottom:34px}
+.prog i{flex:1;height:3px;border-radius:3px;background:var(--ink4);overflow:hidden;position:relative}
+.prog i:after{content:"";position:absolute;inset:0;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .6s var(--ease)}
+.prog i.f:after{transform:none}
+.qn{font:500 12px var(--sans);letter-spacing:.3em;text-transform:uppercase;color:var(--gold)}
+.qh{font-size:clamp(40px,5vw,66px);margin:14px 0 10px}
+.qs{color:var(--mute);margin-bottom:30px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opt{text-align:left;border:1px solid var(--line2);border-radius:18px;padding:18px;transition:.35s var(--ease);display:flex;gap:14px;align-items:center;background:var(--ink2)}
+.opt:hover{border-color:var(--gold3);transform:translateY(-2px)}
+.opt.on{border-color:var(--gold);background:rgba(201,164,92,.12);box-shadow:inset 0 0 0 1px var(--gold)}
+.opt .em{font-size:26px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--ink3);flex:none}
+.opt b{display:block;font:500 22px/1.1 var(--serif)}
+.opt small{color:var(--mute);font-size:13px}
+.qnav{display:flex;justify-content:space-between;align-items:center;margin-top:28px}
+.qpanel{animation:qin .7s var(--ease)}
+@keyframes qin{from{opacity:0;transform:translateY(24px)}}
+.res{display:grid;gap:14px;margin:26px 0}
+.rcard{display:grid;grid-template-columns:110px 1fr auto;gap:18px;align-items:center;border:1px solid var(--line);border-radius:20px;padding:12px;background:var(--ink2);animation:qin .8s var(--ease) both}
+.rcard img{width:110px;height:130px;object-fit:cover;border-radius:14px}
+.rcard h3{font-size:30px}
+.rcard .why{font-size:13.5px;color:var(--mute);margin-top:4px}
+.ring{width:66px;height:66px;position:relative;display:grid;place-items:center;font:500 18px var(--serif);color:var(--gold2)}
+.ring svg{position:absolute;inset:0;transform:rotate(-90deg)}
+@media(max-width:860px){.fz{grid-template-columns:1fr}.fz-vis{position:relative;height:34svh}.fz-vis:after{background:linear-gradient(0deg,var(--ink),transparent 70%)}.fz-main{padding:24px var(--pad) 110px}.opts{grid-template-columns:1fr}.rcard{grid-template-columns:80px 1fr;}.rcard img{width:80px;height:96px}.rcard .ring{grid-column:2;width:52px;height:52px;font-size:15px}}
+</style>
+</head>
+<body data-page="finder">
+<div class="fz">
+  <div class="fz-vis" id="vis">
+    <img src="img/dunes.jpg" alt="" class="on"><img src="img/glow.jpg" alt=""><img src="img/saffron.jpg" alt=""><img src="img/smoke2.jpg" alt=""><img src="img/pour.jpg" alt=""><img src="img/candles.jpg" alt="">
+    <div class="ar" id="arw">عطر</div>
+  </div>
+  <div class="fz-main"><div id="panel"></div></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="data.js"></script>
+<script src="shared.js"></script>
+<script>
+(function(){
+  const Q = [
+    { k:'g', t:'Who is it <em>for?</em>', s:'Arabian perfumes blur the lines — lots of our bestsellers are unisex.', ar:'لمن', o:[['her','💐','For her','Soft, sweet, floral'],['him','🦁','For him','Spice, woods, amber'],['any','✦','Either / a gift','Show me everything'],['unisex','◐','Something to share','Unisex only']] },
+    { k:'w', t:'When will you <em>wear it?</em>', s:'Trinidad heat changes everything — we account for it.', ar:'متى', o:[['day','☀️','Daytime & office','Clean, not overpowering'],['everyday','🌴','Everyday signature','Easy to love, easy to wear'],['night','🌙','Night out & fetes','Projection that turns heads'],['occasion','💍','Weddings & Eid','Rich, special, memorable']] },
+    { k:'m', t:'What pulls you <em>in?</em>', s:'Pick up to two.', multi:2, ar:'ماذا', o:[['sweet','🍯','Sweet & edible','Dates, vanilla, praline'],['smoky','🔥','Smoky & woody','Oud, incense, leather'],['fresh','🍋','Fresh & citrus','Bergamot, ginger, sea air'],['floral','🌹','Flowers','Rose, jasmine, orchid'],['amber','✨','Warm & spicy','Amber, saffron, tobacco'],['clean','🤍','Clean musk','Soft skin, fresh laundry']] },
+    { k:'p', t:'How <em>loud</em> do you like it?', s:'Projection — how far your scent travels.', ar:'كم', o:[['2','🤫','Skin scent','Only people I hug'],['3.5','💬','Noticeable','A trail when I pass'],['5','📣','Room-filling','They know I arrived']] },
+    { k:'b', t:'And your <em>budget?</em>', s:'Every option comes as a decant too.', ar:'سعر', o:[['450','◇','Under TT$450','Smart everyday picks'],['650','◆','Up to TT$650','The full collection'],['decant','⟡','Decants first','Let me try before I buy']] },
+  ];
+  const A = { m:[] }; let i = 0;
+  const panel = $('#panel'), vis = $$('#vis img');
+
+  function show(){
+    vis.forEach((im,j)=>im.classList.toggle('on', j===i));
+    if (i>=Q.length) return results();
+    const q = Q[i]; $('#arw').textContent = q.ar;
+    const sel = v => q.multi ? A.m.includes(v) : A[q.k]===v;
+    panel.innerHTML = `<div class="qpanel"><div class="prog">${Q.map((_,j)=>`<i class="${j<=i?'f':''}"></i>`).join('')}</div>
+      <div class="qn">Question ${i+1} of ${Q.length}</div><h1 class="qh">${q.t}</h1><p class="qs">${q.s}</p>
+      <div class="opts">${q.o.map(([v,e,b,s])=>`<button class="opt ${sel(v)?'on':''}" data-v="${v}"><span class="em">${e}</span><span><b>${b}</b><small>${s}</small></span></button>`).join('')}</div>
+      <div class="qnav"><button class="link" id="back" ${i?'':'style="visibility:hidden"'}>← Back</button>${q.multi?`<button class="btn gold" id="next" ${A.m.length?'':'disabled style="opacity:.4"'}>Next</button>`:''}</div></div>`;
+    $$('.opt',panel).forEach(b=>b.onclick=()=>{
+      const v=b.dataset.v;
+      if (q.multi){ A.m = A.m.includes(v)?A.m.filter(x=>x!==v):[...A.m,v].slice(-q.multi); show(); }
+      else { A[q.k]=v; b.classList.add('on'); setTimeout(()=>{i++;show();},280); }
+    });
+    $('#back').onclick=()=>{i--;show();};
+    if ($('#next')) $('#next').onclick=()=>{ if(A.m.length){i++;show();} };
+    scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function score(p){
+    let s=0, why=[];
+    if (A.g==='any'){} else if (A.g==='unisex'){ s+= p.g==='unisex'?4:-6; }
+    else { if(p.g===A.g){s+=3;} else if(p.g==='unisex'){s+=2;} else s-=8; }
+    if (p.when.includes(A.w)){ s+=3; why.push({day:'office-safe',everyday:'easy everyday wear',night:'made for nights out',occasion:'special-occasion rich'}[A.w]); }
+    A.m.forEach(m=>{ if(p.mood.includes(m)){ s+=4; why.push({sweet:'sweet & gourmand',smoky:'smoky depth',fresh:'fresh in the heat',floral:'floral heart',amber:'warm amber glow',clean:'clean musk'}[m]); } });
+    s -= Math.abs(p.s - +A.p)*1.4; if (Math.abs(p.s - +A.p)<=1) why.push(p.s>=4?'big projection':p.s<=2?'sits close':'noticeable trail');
+    if (A.b==='450' && p.price<=450) s+=2; if (A.b==='450' && p.price>450) s-=1.5;
+    return { p, s, why:[...new Set(why)].slice(0,3) };
+  }
+
+  function results(){
+    $('#arw').textContent = 'لك';
+    const R = PRODUCTS.filter(p=>!p.home).map(score).sort((a,b)=>b.s-a.s).slice(0,3);
+    const top = R[0].s; const pct = r => Math.round(Math.max(72, Math.min(98, 98 - (top - r.s)*3)));
+    const dec = A.b==='decant';
+    panel.innerHTML = `<div class="qpanel"><div class="prog">${Q.map(()=>`<i class="f"></i>`).join('')}</div>
+      <div class="qn">Your matches</div><h1 class="qh">Three scents, <em>made for you.</em></h1>
+      <p class="qs">${dec?'Starting with decants is smart — add all three as 5ml samplers below.':'Add your favourite as a full bottle, or try all three as decants first.'}</p>
+      <div class="res">${R.map((r,j)=>{const P=pct(r);return `<div class="rcard" style="animation-delay:${j*.12}s"><a href="product.html?id=${r.p.id}"><img src="${r.p.img}" alt=""></a>
+        <div><div class="eyebrow" style="font-size:10px">${r.p.house} · ${money(r.p.price)}</div><a href="product.html?id=${r.p.id}"><h3>${r.p.name}</h3></a><div class="why">${r.why.length?r.why.join(' · '):FAMILIES[r.p.fam].label}</div>
+          <button class="link" style="margin-top:8px;font-size:13px" data-quick="${r.p.id}">Choose a size →</button></div>
+        <div class="ring"><svg viewBox="0 0 66 66"><circle cx="33" cy="33" r="29" stroke="#2a2119" stroke-width="3" fill="none"/><circle cx="33" cy="33" r="29" stroke="#c9a45c" stroke-width="3" fill="none" stroke-dasharray="182.2" stroke-dashoffset="${182.2*(1-P/100)}" stroke-linecap="round"/></svg>${P}%</div></div>`;}).join('')}</div>
+      <div style="display:grid;gap:10px"><button class="btn gold block" id="trio">Add all 3 as 5ml decants — ${money(R.reduce((t,r)=>t+sizesFor(r.p).find(s=>s.k==='5'||s.k==='3ml').price,0))}</button>
+      <a class="btn wa block" target="_blank" rel="noopener" href="${waLink(`Hi ${SHOP}! 🌙 I did the Scent Finder and matched with: ${R.map(r=>r.p.name).join(', ')}. Can you tell me more / which you'd recommend?`)}">${ICON.wa} Send my matches on WhatsApp</a>
+      <button class="link" id="again" style="justify-self:center;margin-top:10px">Start over</button></div></div>`;
+    $('#trio').onclick=()=>R.forEach(r=>Bag.add(r.p.id, sizesFor(r.p).find(s=>s.k==='5'||s.k==='3ml').k));
+    $('#again').onclick=()=>{i=0;A.m=[];delete A.g;delete A.w;delete A.p;delete A.b;show();};
+    window.WA_CONTEXT=()=>['Send my matches',`Hi ${SHOP}! 🌙 My Scent Finder matches: ${R.map(r=>r.p.name).join(', ')}.`]; updateFloat();
+    scrollTo({top:0,behavior:'smooth'});
+  }
+  show();
+})();
+</script>
+</body>
+</html>

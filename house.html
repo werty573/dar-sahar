@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Our House — Dar Sahar</title>
+<meta name="description" content="Our story, authenticity promise, expo dates, delivery and FAQ.">
+<meta name="theme-color" content="#0d0a08">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%230d0a08'/%3E%3Cpath d='M23.5 13.5a7 7 0 1 0 2.6 9.6 5.6 5.6 0 1 1-2.6-9.6Z' fill='%23c9a45c'/%3E%3C/svg%3E">
+<style>
+.story{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,90px);align-items:center}
+.story .ph{border-radius:260px 260px var(--r) var(--r);overflow:hidden;aspect-ratio:4/5;position:relative}
+.story .ph img{position:absolute;inset:-8% 0;width:100%;height:116%;object-fit:cover}
+.story p+p{margin-top:16px}
+.quote{font:italic 400 clamp(30px,3.4vw,44px)/1.2 var(--serif);color:var(--gold2);border-left:1px solid var(--gold3);padding-left:24px;margin:30px 0}
+.auth{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:a}
+.auth div{border:1px solid var(--line);border-radius:var(--r);padding:28px;background:var(--ink2);counter-increment:a;position:relative}
+.auth div:before{content:"0" counter(a);font:500 60px/1 var(--serif);color:var(--gold3);display:block;margin-bottom:18px}
+.auth h4{font:500 26px/1.1 var(--serif);margin-bottom:10px}
+.auth p{color:var(--mute);font-size:15px}
+.events{border-top:1px solid var(--line)}
+.ev{display:grid;grid-template-columns:120px 1fr auto;gap:24px;align-items:center;padding:26px 0;border-bottom:1px solid var(--line);transition:padding .4s var(--ease)}
+.ev:hover{padding-left:12px}
+.ev .d b{display:block;font:500 54px/1 var(--serif);color:var(--gold2)}
+.ev .d span{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--mute)}
+.ev h4{font:500 30px/1.1 var(--serif)}
+.ev p{color:var(--mute);font-size:14.5px;margin-top:4px}
+.ev.past{opacity:.45}
+.del{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.tbl{border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.tbl div{display:flex;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--line);font-size:15px}
+.tbl div:last-child{border:0}
+.tbl div span:last-child{color:var(--gold2)}
+.tbl .h{background:var(--ink3);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;padding:22px 0;font:500 clamp(22px,2.4vw,28px)/1.2 var(--serif);display:flex;justify-content:space-between;gap:20px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:after{content:"+";color:var(--gold);transition:transform .3s;flex:none}
+.faq details[open] summary:after{transform:rotate(45deg)}
+.faq p{color:var(--mute);padding-bottom:22px;max-width:70ch}
+.cta{text-align:center;padding:clamp(60px,9vw,120px) var(--pad);border:1px solid var(--line);border-radius:28px;background:radial-gradient(ellipse at top,rgba(201,164,92,.16),transparent 60%),var(--ink2)}
+@media(max-width:860px){.story,.del{grid-template-columns:1fr}.auth{grid-template-columns:1fr}.ev{grid-template-columns:76px 1fr}.ev .btn{grid-column:1/-1}.ev .d b{font-size:40px}}
+</style>
+</head>
+<body data-page="house">
+<header class="phead"><div class="wrap">
+  <div class="crumbs"><a href="index.html">Home</a> / Our House</div>
+  <div class="ar-bg ar" aria-hidden="true">دار</div>
+  <div class="eyebrow">Dar Sahar · "House of Dawn"</div>
+  <h1 style="margin-top:14px">A little piece of <em>Arabia</em>,<br>in Trinidad.</h1>
+</div></header>
+
+<section class="sec" style="padding-top:20px"><div class="wrap story">
+  <div class="ph reveal"><img src="img/story.jpg" alt="Man in traditional dress holding a perfume bottle" id="stimg"></div>
+  <div class="reveal">
+    <div class="eyebrow">Our story</div>
+    <h2 style="margin:14px 0 22px;font-size:clamp(38px,4.6vw,60px)">It started with <em>one bottle</em> from Dubai.</h2>
+    <p class="lead">A gift of Khamrah from a cousin abroad turned into friends asking "where can I get that?" — and nobody locally could promise it was real. So we started importing direct from the Gulf houses ourselves.</p>
+    <p class="lead">Today we're a registered T&T perfume business carrying the Arabian fragrances everyone is talking about — full bottles, body sprays and hand-poured decants — delivered to every corner of the islands, and on the tester table at expos most months.</p>
+    <p class="quote">"In the Gulf, scent is hospitality. We want every order to feel like a welcome."</p>
+    <a class="btn gold" href="shop.html">Shop the collection</a>
+  </div>
+</div></section>
+
+<section class="sec" id="authentic" style="background:var(--ink2);border-block:1px solid var(--line)"><div class="wrap">
+  <div class="sec-head reveal"><div><div class="eyebrow">Our authenticity promise</div><h2 style="margin-top:14px">💯 Real. <em>Every time.</em></h2></div><p class="lead">Copies are everywhere in T&T. Here's how we make sure you never get one.</p></div>
+  <div class="auth">
+    <div class="reveal"><h4>Direct from source</h4><p>We buy only from the houses' authorised regional distributors in the UAE — no grey-market, no "testers", no mystery stock.</p></div>
+    <div class="reveal"><h4>Sealed & batch-coded</h4><p>Every full bottle arrives cellophane-sealed with a batch code printed on box and bottle. Ask us and we'll show you how to verify it.</p></div>
+    <div class="reveal"><h4>Decants from sealed stock</h4><p>Decants are poured from bottles we open in front of the camera — we'll send you the video on WhatsApp if you like.</p></div>
+  </div>
+</div></section>
+
+<section class="sec" id="events"><div class="wrap">
+  <div class="sec-head reveal"><div><div class="eyebrow">Smell before you buy</div><h2 style="margin-top:14px">Find us at <em>the expos</em></h2></div><p class="lead">Every bottle on the tester table. Pre-order on WhatsApp and collect at the booth — no delivery fee.</p></div>
+  <div class="events" id="evs"></div>
+</div></section>
+
+<section class="sec" id="delivery" style="padding-top:0"><div class="wrap">
+  <div class="sec-head reveal"><div><div class="eyebrow">Delivery & payment</div><h2 style="margin-top:14px">To your <em>door</em>, island-wide.</h2></div></div>
+  <div class="del">
+    <div class="tbl reveal"><div class="h"><span>Area</span><span>Fee · 1–3 days</span></div><div><span>Port of Spain & North</span><span>TT$40</span></div><div><span>East · Arima · Sangre Grande</span><span>TT$40</span></div><div><span>Central · Chaguanas · Couva</span><span>TT$40</span></div><div><span>South · San Fernando</span><span>TT$45</span></div><div><span>Tobago (courier)</span><span>TT$65</span></div><div><span>Orders over TT$800</span><span>FREE</span></div></div>
+    <div class="tbl reveal"><div class="h"><span>Ways to pay</span><span></span></div><div><span>Bank transfer (Republic · First Citizens)</span><span>✓</span></div><div><span>Cash on delivery</span><span>✓</span></div><div><span>Linx on delivery</span><span>✓</span></div><div><span>Card online (WiPay)</span><span>Coming soon</span></div><div><span>Gift wrap & note</span><span>Free</span></div><div><span>Order hours</span><span>Mon–Sat 9–8</span></div></div>
+  </div>
+</div></section>
+
+<section class="sec faq" id="faq" style="padding-top:0"><div class="wrap" style="max-width:980px">
+  <div class="reveal" style="margin-bottom:24px"><div class="eyebrow">FAQ</div><h2 style="margin-top:14px">Good <em>questions</em></h2></div>
+  <details><summary>Are Arabian perfumes long-lasting in our heat?</summary><p>Yes — that's why people switch. Most of our fragrances are high-concentration Eau de Parfum built on amber, musk and oud bases that hold up to Caribbean humidity far better than many designer scents. Spray on clothes too; fabric holds them for days.</p></details>
+  <details><summary>What's a decant and is it the real thing?</summary><p>A decant is the exact same perfume, hand-poured from a sealed full bottle into a clean glass atomiser. 5ml is about 70 sprays — enough to wear it for a couple of weeks and decide.</p></details>
+  <details><summary>How do I order?</summary><p>Add what you like to your bag and tap "Send order on WhatsApp". Your full order arrives in our chat, we confirm stock and delivery day, and you pay by transfer, Linx or cash on delivery. Or just message us — we're happy to help you choose.</p></details>
+  <details><summary>Do you do gifts and corporate orders?</summary><p>Yes. Free gift wrap with a handwritten note on every order, and we put together custom Discovery Boxes and bulk gifting for weddings, Eid, Divali, Christmas and corporate events.</p></details>
+  <details><summary>Can I return a perfume?</summary><p>Sealed, unopened bottles can be exchanged within 7 days. For hygiene reasons opened bottles and decants can't be returned — that's exactly why we offer decants first.</p></details>
+</div></section>
+
+<section style="padding-bottom:60px"><div class="wrap"><div class="cta reveal">
+  <div class="eyebrow">Still deciding?</div><h2 style="margin:16px auto 18px;max-width:16ch">Message us. We'll <em>smell it for you.</em></h2>
+  <p class="lead" style="margin:0 auto 30px">Tell us what you usually wear and what you love — we'll suggest three you'll adore.</p>
+  <a class="btn wa" target="_blank" rel="noopener" id="ctawa"></a>
+</div></div></section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="data.js"></script>
+<script src="shared.js"></script>
+<script>
+(function(){
+  const EV = [
+    { d:'08', m:'Nov 2026', t:'Barakah Grounds · Holiday Expo', w:'Sat & Sun · 10am – 7pm · St. Joseph' },
+    { d:'29', m:'Nov 2026', t:'Divali & Christmas Gift Market', w:'Sunday · 11am – 6pm · Chaguanas' },
+    { d:'13', m:'Dec 2026', t:'Island Makers Christmas Fair', w:'Sat & Sun · 10am – 8pm · Port of Spain' },
+    { d:'19', m:'Jul 2026', t:'Barakah Grounds · July Expo', w:'Thank you to everyone who came out!', past:true },
+  ];
+  $('#evs').innerHTML = EV.map(e=>`<div class="ev reveal ${e.past?'past':''}"><div class="d"><b>${e.d}</b><span>${e.m}</span></div><div><h4>${e.t}</h4><p>${e.w}</p></div>${e.past?'<span class="chip">Past</span>':`<a class="btn ghost" target="_blank" rel="noopener" href="${waLink(`Hi ${SHOP}! 🌙 I'd like to pre-order for collection at ${e.t} (${e.d} ${e.m}).`)}">Pre-order for pickup</a>`}</div>`).join('');
+  const c = $('#ctawa'); c.href = waLink(`Hi ${SHOP}! 🌙 I usually wear ___ and I love ___. What would you recommend?`); c.innerHTML = `${ICON.wa} Get 3 recommendations`;
+  revealAll();
+  if (window.gsap && !matchMedia('(prefers-reduced-motion: reduce)').matches) gsap.fromTo('#stimg',{yPercent:-6},{yPercent:6,ease:'none',scrollTrigger:{trigger:'#stimg',start:'top bottom',end:'bottom top',scrub:true}});
+})();
+</script>
+</body>
+</html>
